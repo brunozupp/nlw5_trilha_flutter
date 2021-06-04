@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nlw5_trilha_flutter/pages/challenge/challenge_page.dart';
 import 'package:nlw5_trilha_flutter/pages/home/home_page.dart';
 import 'package:nlw5_trilha_flutter/pages/splash/splash_page.dart';
 
@@ -10,7 +11,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "DevQuiz",
-      home: HomePage(),
+      home: ChallengePage(),
     );
   }
 }
