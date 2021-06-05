@@ -3,15 +3,18 @@ import 'package:nlw5_trilha_flutter/pages/challenge/challenge_controller.dart';
 import 'package:nlw5_trilha_flutter/pages/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:nlw5_trilha_flutter/pages/challenge/widgets/question_indicator/question_indicator_widget.dart';
 import 'package:nlw5_trilha_flutter/pages/challenge/widgets/quiz/quiz_widget.dart';
+import 'package:nlw5_trilha_flutter/pages/result/result_page.dart';
 import 'package:nlw5_trilha_flutter/shared/models/question_model.dart';
 
 class ChallengePage extends StatefulWidget {
 
   final List<QuestionModel> questions;
+  final String title;
 
   const ChallengePage({ 
     Key? key, 
-    required this.questions 
+    required this.questions, 
+    required this.title 
   }) : super(key: key);
 
   @override
@@ -48,6 +51,13 @@ class _ChallengePageState extends State<ChallengePage> {
       );
   }
 
+  void onSelected(bool value) {
+    if(value) {
+      controller.answersRights++;
+    }
+    nextPage();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +90,7 @@ class _ChallengePageState extends State<ChallengePage> {
         controller: pageController,
         children: widget.questions.map((e) => QuizWidget(
           question: e,
-          onChange: nextPage,
+          onSelected: onSelected,
         )).toList(),
       ),
       bottomNavigationBar: SafeArea(
@@ -110,7 +120,12 @@ class _ChallengePageState extends State<ChallengePage> {
                       child: NextButtonWidget.green(
                         label: "Confirmar",
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) 
+                            => ResultPage(
+                              title: widget.title,
+                              length: widget.questions.length,
+                              result: controller.answersRights,
+                            )));
                         },
                       ),
                     ),
