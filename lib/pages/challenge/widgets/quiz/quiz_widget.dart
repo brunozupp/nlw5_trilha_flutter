@@ -1,46 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:nlw5_trilha_flutter/core/app_text_styles.dart';
 import 'package:nlw5_trilha_flutter/pages/challenge/widgets/answer/answer_widget.dart';
+import 'package:nlw5_trilha_flutter/shared/models/answer_model.dart';
+import 'package:nlw5_trilha_flutter/shared/models/question_model.dart';
 
-class QuizWidget extends StatelessWidget {
+class QuizWidget extends StatefulWidget {
 
-  final String title;
+  final QuestionModel question;
+  final VoidCallback onChange;
 
-  const QuizWidget({ Key? key, required this.title }) : super(key: key);
+  const QuizWidget({ 
+    Key? key, 
+    required this.question, 
+    required this.onChange 
+  }) : super(key: key);
+
+  @override
+  _QuizWidgetState createState() => _QuizWidgetState();
+}
+
+class _QuizWidgetState extends State<QuizWidget> {
+
+  int indexSelected = -1;
+
+  AnswerModel answer(int index) => widget.question.answers[index];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
+          SizedBox(height: 64),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              "Título da pergunta a qual está sendo perguntada",
+              widget.question.title,
               style: AppTextStyles.heading,
             ),
           ),
           SizedBox(
             height: 24
           ),
-          AnswerWidget(
-            title: "Possibilita a criação de componentes rederizados nativamente?",
-            isRight: true,
-            isSelected: true,
-          ),
-          AnswerWidget(
-            title: "Possibilita a criação de componentes rederizados nativamente?",
-            isSelected: true,
-          ),
-          AnswerWidget(
-            title: "Possibilita a criação de componentes rederizados nativamente?"
-          ),
-          AnswerWidget(
-            title: "Possibilita a criação de componentes rederizados nativamente?"
-          ),
-          AnswerWidget(
-            title: "Possibilita a criação de componentes rederizados nativamente?"
-          ),
+          for(var i = 0; i < widget.question.answers.length; i++)
+            AnswerWidget(
+              answer: answer(i),
+              disabled: indexSelected != -1,
+              isSelected: indexSelected == i,
+              onTap: () {
+                setState(() {
+                  indexSelected = i;
+                  widget.onChange();
+                });
+              },
+            ),
+
+          // ...widget.question.answers.map((e) => AnswerWidget(
+          //   title: e.title,
+          //   isRight: e.isRight,
+          // )).toList(),
+          
         ],
       )
     );

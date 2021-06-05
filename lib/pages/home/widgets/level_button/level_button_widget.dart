@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nlw5_trilha_flutter/core/app_colors.dart';
-import 'package:nlw5_trilha_flutter/core/app_text_styles.dart';
 
 class LevelButtonWidget extends StatelessWidget {
 

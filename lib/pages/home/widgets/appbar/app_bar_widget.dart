@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:nlw5_trilha_flutter/core/app_gradients.dart';
 import 'package:nlw5_trilha_flutter/core/app_text_styles.dart';
 import 'package:nlw5_trilha_flutter/pages/home/widgets/score_card/score_card_widget.dart';
+import 'package:nlw5_trilha_flutter/shared/models/user_model.dart';
 
 class AppBarWidget extends PreferredSize {
+
+  final UserModel user;
   
-  AppBarWidget() : super(
+  AppBarWidget({required this.user}) : super(
     preferredSize: Size.fromHeight(250),
     child: Container(
       height: 250,
@@ -27,7 +30,7 @@ class AppBarWidget extends PreferredSize {
                     style: AppTextStyles.title,
                     children: [
                       TextSpan(
-                        text: "Bruno DEV",
+                        text: user.name,
                         style: AppTextStyles.titleBold
                       )
                     ]
@@ -40,7 +43,7 @@ class AppBarWidget extends PreferredSize {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: NetworkImage("https://avatars.githubusercontent.com/u/53659739?s=400&u=58ce2070db0bbd4fb5c9ca9debc905373cc9745a&v=4"),
+                      image: NetworkImage(user.photoUrl),
                     ),
                   ),
                 ),
